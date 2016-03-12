@@ -1,0 +1,11 @@
+# Variables for backup script
+
+# WEB
+webcontainer=
+webvolume=
+
+# SQL
+sqlcontainer=
+sqluser=
+sqlpassword=
+sqldatabase=

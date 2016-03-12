@@ -2,13 +2,7 @@
 
 # Variables
 
-webcontainer=$WEB_CONTAINER
-webvolume=$WEB_VOLUME
-
-sqlcontainer=$SQL_CONTAINER
-sqluser=$SQL_USER
-sqlpassword=$SQL_PASSWORD
-sqldatabase=$SQL_DATABASE
+source /variables
 
 # Functions
 

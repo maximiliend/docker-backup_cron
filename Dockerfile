@@ -6,9 +6,12 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && touch /var/log/cron.log
 
-ADD backup_cron /etc/cron.d/backup_cron
-ADD backup_cron.sh /backup_cron.sh
+COPY backup_cron /etc/cron.d/backup_cron
+COPY backup_cron.sh /backup_cron.sh
+COPY variables /variables
+COPY docker-entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /backup_cron.sh
 
+ENTRYPOINT ["/entrypoint.sh"]
 CMD cron && tail -f /var/log/cron.log
