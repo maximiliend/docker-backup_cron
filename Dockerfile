@@ -11,7 +11,7 @@ COPY backup_cron.sh /backup_cron.sh
 COPY variables /variables
 COPY docker-entrypoint.sh /entrypoint.sh
 
-RUN chmod +x /backup_cron.sh
+RUN chmod +x /backup_cron.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD cron && tail -f /var/log/cron.log
