@@ -1,7 +1,7 @@
 FROM debian:latest
 
 RUN apt-get update \
-    && apt-get install -y cron \
+    && apt-get install -y cron tar mariadb-client \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/* \
     && touch /var/log/cron.log
