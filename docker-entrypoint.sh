@@ -3,40 +3,44 @@ set -e
 
 # Variables
 
-if [ -z "$WEB_CONTAINER" ]; then
+if [ -z "$BACKUP_WEB_CONTAINER" ]; then
     echo >&2 'error: missing required WEB_CONTAINER environment variable'
     echo >&2 '  Did you forget to -e WEB_CONTAINER=... ?'
     exit 1
 fi
 
-if [ -z "$WEB_VOLUME" ]; then
+if [ -z "$BACKUP_WEB_VOLUME" ]; then
     echo >&2 'error: missing required WEB_VOLUME environment variable'
     echo >&2 '  Did you forget to -e WEB_VOLUME=... ?'
     exit 1
 fi
 
-if [ -z "$SQL_CONTAINER" ]; then
+if [ -z "$BACKUP_SQL_CONTAINER" ]; then
     echo >&2 'error: missing required SQL_CONTAINER environment variable'
     echo >&2 '  Did you forget to -e SQL_CONTAINER=... ?'
     exit 1
 fi
 
-if [ -z "$SQL_USER" ]; then
+if [ -z "$BACKUP_SQL_USER" ]; then
     echo >&2 'error: missing required SQL_USER environment variable'
     echo >&2 '  Did you forget to -e SQL_USER=... ?'
     exit 1
 fi
 
-if [ -z "$SQL_PASSWORD" ]; then
+if [ -z "$BACKUP_SQL_PASSWORD" ]; then
     echo >&2 'error: missing required SQL_PASSWORD environment variable'
     echo >&2 '  Did you forget to -e SQL_PASSWORD=... ?'
     exit 1
 fi
 
-if [ -z "$SQL_DATABASE" ]; then
+if [ -z "$BACKUP_SQL_DATABASE" ]; then
     echo >&2 'error: missing required SQL_DATABASE environment variable'
     echo >&2 '  Did you forget to -e SQL_DATABASE=... ?'
     exit 1
+fi
+
+if [ -z "$BACKUP_SQL_PORT" ]; then
+    export BACKUP_SQL_PORT='3306'
 fi
 
 
@@ -53,11 +57,12 @@ function set_variable {
 
 # Main
 
-set_variable 'webcontainer' "$WEB_CONTAINER"
-set_variable 'webvolume' "$WEB_VOLUME"
-set_variable 'sqlcontainer' "$SQL_CONTAINER"
-set_variable 'sqluser' "$SQL_USER"
-set_variable 'sqlpassword' "$SQL_PASSWORD"
-set_variable 'sqldatabase' "$SQL_DATABASE"
+set_variable 'webcontainer' "$BACKUP_WEB_CONTAINER"
+set_variable 'webvolume' "$BACKUP_WEB_VOLUME"
+set_variable 'sqlcontainer' "$BACKUP_SQL_CONTAINER"
+set_variable 'sqluser' "$BACKUP_SQL_USER"
+set_variable 'sqlpassword' "$BACKUP_SQL_PASSWORD"
+set_variable 'sqldatabase' "$BACKUP_SQL_DATABASE"
+set_variable 'sqlport' "$BACKUP_SQL_PORT"
 
 exec "$@"
