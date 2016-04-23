@@ -43,16 +43,28 @@ if [ -z "$BACKUP_SQL_PORT" ]; then
     export BACKUP_SQL_PORT='3306'
 fi
 
+if [ -z "$BACKUP_CRON_HOUR" ]; then
+    export BACKUP_CRON_HOUR='4'
+fi
+
+if [ -z "$BACKUP_CRON_MIN" ]; then
+    export BACKUP_CRON_MIN='42'
+fi
 
 # Functions
 
-function set_variable {
+set_variable () {
     if grep -q "^$1=" /variables
     then
         sed -i "/$1=/c\\$1=$2" /variables
     else
         echo "$1=$2" >> /variables
     fi
+}
+
+set_backup_cron () {
+    # m h dom mon dow user  command
+    echo "${BACKUP_CRON_MIN} ${BACKUP_CRON_HOUR} * * * root /backup_cron.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/backup_cron
 }
 
 # Main
@@ -64,5 +76,7 @@ set_variable 'sqluser' "$BACKUP_SQL_USER"
 set_variable 'sqlpassword' "$BACKUP_SQL_PASSWORD"
 set_variable 'sqldatabase' "$BACKUP_SQL_DATABASE"
 set_variable 'sqlport' "$BACKUP_SQL_PORT"
+
+set_backup_cron
 
 exec "$@"
